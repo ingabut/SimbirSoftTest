@@ -32,10 +32,4 @@ public class ConfProperties {
         return PROPERTIES.getProperty(key);
     }
 
-    public static void main(String [] args) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd MMMM yyyy hh:mm:ss", new Locale("ru"));
-        String now = LocalDateTime.now().format(formatter);
-        System.out.println(now);
-
-    }
 }

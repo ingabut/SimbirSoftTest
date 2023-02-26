@@ -15,7 +15,7 @@ public class TestListener implements ITestListener {
     }
 
     @Override
-    public void onTestSuccess(ITestResult result) {
+    public void onTestFailure(ITestResult result) {
         saveScreenshotPNG(DriverManager.getDriverThread());
     }
 
