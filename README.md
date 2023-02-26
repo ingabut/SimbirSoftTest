@@ -6,14 +6,15 @@
 java -jar selenium-server-<version>.jar standalone
 
 Далее выполняем следующие команды:
-Для запуска тестов: 
+
+-для запуска тестов: 
 
 gradlew test -PsuiteFile=src\test\resources\testng\account_tests.xml
 
-для просмотра отчета:
+-для просмотра отчета:
 
 gradlew allureServe
 
-для очистки данных (чтобы информация о предыдущих запусках не попадала в отчет):
+-для очистки данных (чтобы информация о предыдущих запусках не попадала в отчет):
 
 gradlew clean
