@@ -27,7 +27,7 @@ public class BaseTests {
     public void initiate() {
         ChromeOptions chromeOptions = new ChromeOptions();
         try {
-            RemoteWebDriver driver = new RemoteWebDriver(new URL("http://localhost:4444"), chromeOptions);
+            RemoteWebDriver driver = new RemoteWebDriver(new URL(ConfProperties.getProperty("gridUrl")), chromeOptions);
             DriverManager.setDriverThread(driver);
         } catch (MalformedURLException e) {
             e.printStackTrace();
