@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Listeners({TestListener.class})
 public class AccountTest extends BaseTests {
 
-    @Test(description = "Test debit and withdraw balance")
+    @Test(description = "Test deposit and withdraw from account")
     public void testDebitCreditBalance(){
         int fib = FuncUtils.fibonacciCalc(LocalDate.now().getDayOfMonth() + 1);
         ap.makeDeposit(fib);
