@@ -4,10 +4,11 @@ import com.simbirsoft.base.DriverManager;
 import com.simbirsoft.utils.CustomTools;
 import io.qameta.allure.Attachment;
 import io.qameta.allure.Step;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
@@ -47,12 +48,22 @@ public class AccountPage {
     @FindBy(xpath = "//div[@ng-hide='noAccount'][1]")
     private WebElement balanceDataField;
 
+    @FindBy(xpath = "//label[contains(text(), 'Amount to be Withdrawn')]")
+    private WebElement labelWithdrawn;
+
+    @FindBy(xpath = "//span[contains(text(), 'Transaction successful')]")
+    private WebElement withdrawnSuccess;
+
+    @FindBy(xpath = "//span[contains(text(), 'Deposit Successful')]")
+    private WebElement depositSuccess;
+
     private static final Logger LOG = LoggerFactory.getLogger(AccountPage.class);
 
     List<String> transactionList = new ArrayList<>();
 
     public static final String DEBIT = "Debit";
     public static final String CREDIT = "Credit";
+    private static final WebDriverWait wait = DriverManager.getWait();
 
     public AccountPage() {
         PageFactory.initElements(DriverManager.getDriverThread(), this);
@@ -61,20 +72,20 @@ public class AccountPage {
     public void makeDeposit(int amount) {
         depositButton.click();
         LOG.info("Нажимаем на кнопку \"Deposit\"");
-        systemSleep(0.5);
         amountField.sendKeys(String.valueOf(amount));
-        systemSleep(0.5);
         submitButton.click();
+        wait.until(ExpectedConditions.visibilityOf(depositSuccess));
         transactionList.add(String.format("%s\t%s\t%s", formatDateTime(), amount, CREDIT));
     }
 
     @Step("Make withdrawl on {amount}")
     public void makeWithdraw(int amount) {
         withdrawlButton.click();
-        systemSleep(1);
+        wait.until(ExpectedConditions.visibilityOf(labelWithdrawn));
+        wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         amountField.sendKeys(String.valueOf(amount));
-        systemSleep(1);
         submitButton.click();
+        wait.until(ExpectedConditions.visibilityOf(withdrawnSuccess));
         transactionList.add(String.format("%s\t%s\t%s", formatDateTime(), amount, DEBIT));
     }
 
