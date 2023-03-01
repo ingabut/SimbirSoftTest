@@ -59,7 +59,7 @@ public class AccountPage {
 
     private static final Logger LOG = LoggerFactory.getLogger(AccountPage.class);
 
-    List<String> transactionList = new ArrayList<>();
+    private static final List<String> transactionList = new ArrayList<>();
 
     public static final String DEBIT = "Debit";
     public static final String CREDIT = "Credit";
