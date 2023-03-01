@@ -2,18 +2,17 @@ package com.simbirsoft.utils;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.Locale;
 import java.util.Properties;
 
 public class ConfProperties {
-    protected static FileInputStream fileInputStream;
-    protected static Properties PROPERTIES;
+    private static FileInputStream fileInputStream;
+    private static Properties PROPERTIES;
+
+    private static final String CONF_PROP = "src/test/resources/conf.properties";
 
     static {
         try {
-            fileInputStream = new FileInputStream("src/test/resources/conf.properties");
+            fileInputStream = new FileInputStream(CONF_PROP);
             PROPERTIES = new Properties();
             PROPERTIES.load(fileInputStream);
         } catch (IOException e) {
