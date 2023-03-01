@@ -89,20 +89,32 @@ public class AccountPage {
         transactionList.add(String.format("%s\t%s\t%s", formatDateTime(), amount, DEBIT));
     }
 
-    @Step("Check balance")
+    @Step("Check balance and transactions")
     public void assertTransactions(int amount) {
-        systemSleep(1);
+        checkBalance();
+        clickTransactionButton();
+        assertTransactionsAppeared(amount);
+    }
+
+    private void checkBalance() {
         String balanceData = balanceDataField.getAttribute("textContent");
         String [] balanceArray = balanceData.trim().split(",");
-        String balance = Arrays.asList(balanceArray).stream()
+        String balance = Arrays.stream(balanceArray)
                 .filter(s -> s.contains("Balance"))
                 .findAny()
                 .orElse("");
         writeToFile(String.join("\n", transactionList));
         attachTransactions();
-        SoftAssert softAssert = new SoftAssert();
-        softAssert.assertEquals(balance.substring(balance.indexOf(":") + 1).trim(),"0","Balance doesn't equal to 0");
+        Assert.assertEquals(balance.substring(balance.indexOf(":") + 1).trim(),"0","Balance doesn't equal to 0");
+        systemSleep(1);
+    }
+
+    private void clickTransactionButton() {
+        LOG.info("Click on transaction button");
         transactionsButton.click();
+    }
+    private void assertTransactionsAppeared(int amount) {
+        SoftAssert softAssert = new SoftAssert();
         List <String> list = tableElements.stream()
                 .map(s -> s.getAttribute("textContent"))
                 .collect(Collectors.toList());
@@ -114,7 +126,6 @@ public class AccountPage {
         softAssert.assertEquals(Integer.parseInt(creditData[1].trim()), amount,
                                 "Amount in the table of transactions doesn't match debited amount");
         softAssert.assertAll();
-
     }
 
     @Attachment(value = "transactions.csv", type = "text/csv")
