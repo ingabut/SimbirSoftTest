@@ -74,8 +74,8 @@ public class AccountPage {
         LOG.info("Нажимаем на кнопку \"Deposit\"");
         amountField.sendKeys(String.valueOf(amount));
         submitButton.click();
-        wait.until(ExpectedConditions.visibilityOf(depositSuccess));
         transactionList.add(String.format("%s\t%s\t%s", formatDateTime(), amount, CREDIT));
+        wait.until(ExpectedConditions.visibilityOf(depositSuccess));
     }
 
     @Step("Make withdrawl on {amount}")
@@ -85,8 +85,8 @@ public class AccountPage {
         wait.until(ExpectedConditions.elementToBeClickable(submitButton));
         amountField.sendKeys(String.valueOf(amount));
         submitButton.click();
-        wait.until(ExpectedConditions.visibilityOf(withdrawnSuccess));
         transactionList.add(String.format("%s\t%s\t%s", formatDateTime(), amount, DEBIT));
+        wait.until(ExpectedConditions.visibilityOf(withdrawnSuccess));
     }
 
     @Step("Check balance and transactions")
