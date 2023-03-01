@@ -1,7 +1,7 @@
 package com.simbirsoft.pages;
 
+import com.simbirsoft.base.DriverManager;
 import com.simbirsoft.utils.ConfProperties;
-import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
@@ -9,7 +9,7 @@ import org.openqa.selenium.support.PageFactory;
 import java.util.List;
 import java.util.NoSuchElementException;
 
-public class CustomerLoginPage extends AbstractPage {
+public class CustomerLoginPage {
     private final String name = ConfProperties.getProperty("login");
 
     @FindBy(id = "userSelect")
@@ -20,9 +20,8 @@ public class CustomerLoginPage extends AbstractPage {
 
     @FindBy(xpath = "//button[text() = 'Login']")
     private WebElement loginButton;
-    public CustomerLoginPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
+    public CustomerLoginPage() {
+        PageFactory.initElements(DriverManager.getDriverThread(), this);
     }
 
     public AccountPage login() {
@@ -33,6 +32,6 @@ public class CustomerLoginPage extends AbstractPage {
         loginElement.click();
         loginButton.click();
 
-        return new AccountPage(getDriver());
+        return new AccountPage();
     }
 }

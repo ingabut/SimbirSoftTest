@@ -24,7 +24,7 @@ import java.util.stream.Collectors;
 import static com.simbirsoft.utils.CustomTools.systemSleep;
 import static com.simbirsoft.utils.CustomTools.writeToFile;
 
-public class AccountPage extends AbstractPage {
+public class AccountPage {
 
     @FindBy(xpath = "//button[normalize-space(text())='Deposit'][@ng-click='deposit()']")
     private WebElement depositButton;
@@ -54,8 +54,7 @@ public class AccountPage extends AbstractPage {
     public static final String DEBIT = "Debit";
     public static final String CREDIT = "Credit";
 
-    public AccountPage(WebDriver driver) {
-        super(driver);
+    public AccountPage() {
         PageFactory.initElements(DriverManager.getDriverThread(), this);
     }
     @Step("Make deposit on {amount}")

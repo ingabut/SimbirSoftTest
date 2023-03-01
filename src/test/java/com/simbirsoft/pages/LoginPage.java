@@ -1,19 +1,18 @@
 package com.simbirsoft.pages;
 
-import org.openqa.selenium.WebDriver;
+import com.simbirsoft.base.DriverManager;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
-public class LoginPage extends AbstractPage {
+public class LoginPage {
     @FindBy(xpath="//button[normalize-space(text()) = 'Customer Login']")
     private WebElement customerLogin;
-    public LoginPage(WebDriver driver) {
-        super(driver);
-        PageFactory.initElements(driver, this);
+    public LoginPage() {
+        PageFactory.initElements(DriverManager.getDriverThread(), this);
     }
     public CustomerLoginPage clickCustomerLogin() {
         customerLogin.click();
-        return new CustomerLoginPage(getDriver());
+        return new CustomerLoginPage();
     }
 }
